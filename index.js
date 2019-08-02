@@ -27,9 +27,13 @@ function transferContent(arrayBuffer, wasm_png, wasm) {
   const start = wasm_png.memory_pos();
   const file_buffer = new Uint8Array(arrayBuffer);
   wasm_buffer.set(file_buffer, start);
-  console.log("Decoding PNG image ...");
+  const t0 = performance.now();
   wasm_png.decode_png();
-  console.log("Done");
+  const t1 = performance.now();
+  wasm_png.decode_png_me();
+  const t2 = performance.now();
+  console.log("png crate: " + (t1 - t0) + " milliseconds.");
+  console.log("me: " + (t2 - t1) + " milliseconds.");
 }
 
 run();
