@@ -28,12 +28,21 @@ function transferContent(arrayBuffer, wasm_png, wasm) {
   const file_buffer = new Uint8Array(arrayBuffer);
   wasm_buffer.set(file_buffer, start);
   const t0 = performance.now();
-  wasm_png.decode_png();
+  for (let i = 0; i < 100; i++) {
+    wasm_png.decode_png_me();
+  }
   const t1 = performance.now();
-  wasm_png.decode_png_me();
+  for (let i = 0; i < 100; i++) {
+    wasm_png.decode_png_me_bis();
+  }
   const t2 = performance.now();
-  console.log("png crate: " + (t1 - t0) + " milliseconds.");
-  console.log("me: " + (t2 - t1) + " milliseconds.");
+  for (let i = 0; i < 100; i++) {
+    wasm_png.decode_png();
+  }
+  const t3 = performance.now();
+  console.log("me: " + (t1 - t0) + " milliseconds.");
+  console.log("me bis: " + (t2 - t1) + " milliseconds.");
+  console.log("png crate: " + (t3 - t2) + " milliseconds.");
 }
 
 run();

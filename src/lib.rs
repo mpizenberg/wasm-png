@@ -1,6 +1,6 @@
+use png_decoder::png::{decode_no_check, decode_no_check_bis};
 use std::io::Read;
 use wasm_bindgen::prelude::*;
-use png_decoder::png::decode_no_check;
 
 #[wasm_bindgen]
 pub struct WasmPng {
@@ -37,7 +37,18 @@ impl WasmPng {
 
     pub fn decode_png_me(&mut self) -> ImgSize {
         let png_me = decode_no_check(self.file_buffer.as_slice()).expect("Woops");
-        ImgSize { width: png_me.width, height: png_me.height }
+        ImgSize {
+            width: png_me.width,
+            height: png_me.height,
+        }
+    }
+
+    pub fn decode_png_me_bis(&mut self) -> ImgSize {
+        let png_me = decode_no_check_bis(self.file_buffer.as_slice()).expect("Woops");
+        ImgSize {
+            width: png_me.width,
+            height: png_me.height,
+        }
     }
 }
 
